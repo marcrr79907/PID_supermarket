@@ -7,7 +7,7 @@ from ..models import *
 from ..forms import *
 
 
-class CardListView(LoginRequiredMixin, ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     model = Product
     template_name = 'card/credit_card.html'
 
@@ -29,7 +29,7 @@ class CardListView(LoginRequiredMixin, ListView):
         return context
 
 
-class CardCreateView(LoginRequiredMixin, CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = Product_Form
     template_name = 'card/credit_card.html'
