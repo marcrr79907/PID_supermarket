@@ -2,9 +2,9 @@
 {% load static %}
 {% block content %}
 <section class="register-photo" style="background: rgba(251,251,251,0);">
-    <div class="form-container" style="margin-top: 40px;backdrop-filter: blur(0px) grayscale(0%);-webkit-backdrop-filter: blur(0px) grayscale(0%);border-radius: 20px;box-shadow: 10px 10px 20px 0px rgb(12,13,14);">
+    <div class="form-container">
         
-        <form method="post" action="." style="height: 525px;">
+        <form method="POST" action="." style="height: 525px;">
             {% csrf_token %}
             <input type="hidden" name="action" value="{{action}}">
             <input type="hidden" name="next" value="{{next}}">
@@ -18,7 +18,6 @@
             <div>
                 <input class="form-control" type="password" id="confirmPassword_register" name="password2" placeholder="Repetir contraseña" style="margin-top: 10px;">
             </div>
-            
             
             <div class="form-group mb-3">
                 <button class="btn btn-primary d-block w-100" data-bss-hover-animate="pulse" id="submitButton" type="submit" style="color: rgb(255,255,255);background-color: #00b5a8;box-shadow: 1px 1px 6px 0px rgba(0,0,0,0.81);">Crear cuenta</button>

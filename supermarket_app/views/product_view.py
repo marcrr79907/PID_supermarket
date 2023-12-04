@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
-from django.views.generic import ListView, CreateView, DeleteView
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 from django.urls import reverse_lazy
-from ..models import *
-from ..forms import *
+from ..models import Product, Category
+from ..forms import Product_Form, Category_Form
 
 
 class ProductListView(LoginRequiredMixin, ListView):
@@ -75,10 +75,68 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
         return context
 
+class DestinataryUpdateView(LoginRequiredMixin, UpdateView):
+    model = Product
+    form_class = Product_Form
+    template_name = 'destinatary/destinary.html'
+    success_url = reverse_lazy('supermarket:product_list')
+    url_redirect = success_url
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        data['form_is_valid'] = False
+
+        try:
+            action = request.POST['action_update']
+            if action == 'edit':
+                form = self.get_form()
+                if form.is_valid():
+                    name=request.POST['name']
+
+                    product_list = Product.objects.filter(user=self.request.user)
+                    for product in product_list:
+
+                        if product.name == name:
+
+                            request.session['data'] = {
+                            'error_message': 'Ya existe un producto con este nombre!'}
+                            return redirect(self.success_url)
+                       
+                    form.save()
+                    data['form_is_valid'] = True
+
+                else:
+                    data['error'] = form.errors    
+                
+            else:
+                data['error'] = 'No ha ingresado ninguna acción'
+                
+        except Exception as e:
+            data['error'] = str(e)
+
+        if data['form_is_valid']:
+            request.session['data'] = {
+                'success_message': 'El producto ha sido actualizado con éxito.'}
+            return redirect(self.success_url)
+        else:
+            request.session['data'] = {
+                'error_message': data['error']}
+            return redirect(self.success_url)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Editar Producto'
+
+        return context 
+
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
-    success_url = reverse_lazy('system:card_list')
+    success_url = reverse_lazy('supermarket:product_list')
     template_name = 'eliminar.html'
 
     def dispatch(self, request, *args, **kwargs):
@@ -93,7 +151,7 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context =super().get_context_data(**kwargs)
         
-        context['title'] = 'Eliminar Productp'
+        context['title'] = 'Eliminar Producto'
         context['text'] = 'Estas seguro que desea eliminar el producto?'
         context['url_redirect'] = self.success_url
         return context

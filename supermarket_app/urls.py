@@ -4,7 +4,7 @@ from .views import views, product_view, category_view
 app_name = 'supermarket'
 
 product_urls = [
-    path('product/',product_view.ProductListView.as_view() , name='product')
+    path('product/',product_view.ProductListView.as_view() , name='product_list')
 ]
 
 category_urls = []
