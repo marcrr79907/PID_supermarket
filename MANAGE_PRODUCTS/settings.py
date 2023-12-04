@@ -16,7 +16,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 LOCAL_APPS = [
-    'supermarket_app'
+    'supermarket_app',
+    'users'
 ]
 
 DJANGO_APPS = [
@@ -113,5 +114,17 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'supermarket_app/static')
 ]
+
+# Redireccion al hacer login
+LOGIN_REDIRECT_URL = '/main/'
+
+# Redireccion al cerrar sesion
+LOGOUT_REDIRECT_URL = '/login/'
+
+# Acceder al login
+LOGIN_URL = 'users:login'
+
+# Cierre de sesion al cerrar el nanvegador
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

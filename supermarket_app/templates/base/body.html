@@ -1,10 +1,9 @@
 {% load static %}
 {% include 'base/head.html' %}
-<body style="background: url(&quot;{% static 'img/774369.jpg' %} &quot;) top / cover no-repeat;">
+<body>
 
     {% block header %}
-    {% include 'base/header.html' %}
-
+        {% include 'base/header.html' %}
     {% endblock header %}
     
  
@@ -14,13 +13,11 @@
    
    
     {% block footer %}
-    {% include 'base/footer.html' %}
-
+        {% include 'base/footer.html' %}
     {% endblock footer %}
 
     {% block scripts %}
-    {% include 'base/scripts_alert.html' %}
-    
+        {% include 'base/scripts_alert.html' %}
     {% endblock scripts %}
 
 </body>
