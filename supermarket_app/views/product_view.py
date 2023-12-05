@@ -1,5 +1,9 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
 from django.views.generic import ListView, CreateView, DeleteView, UpdateView, TemplateView
 from django.urls import reverse_lazy
@@ -158,41 +162,35 @@ class ProductDeleteView(LoginRequiredMixin, IsSuperuserMixin, DeleteView):
         return context
    
 
-class SearchProductView(LoginRequiredMixin, IsSuperuserMixin, TemplateView):
-    template_name = 'product/product_template.html'
+class SearchProductView(TemplateView):
+    template_name = 'product/search_product.html'
     
+    @method_decorator(login_required)
+    @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         data = {}
-        data['form_is_valid'] = False
+        
         try:
             action = request.POST['action']
             if action == 'search_product':
-                form = self.get_form()
-                
-                if form.is_valid():
-                    
-                    data['form_is_valid'] = True
-
-                else:
-                    data['error'] = form.errors
+                data = []
+                for i in Product.objects.filter(category_id=request.POST['id']):
+                    data.append(
+                        {
+                            'id': i.id,
+                            'name': i.name
+                        }
+                    )
             else:
                 data['error'] = 'No ha ingresado ninguna acción!'
         
         except Exception as e:
             data['error'] = str(e)
 
-        if data['form_is_valid']:
-            request.session['data'] = {
-                'success_message': 'Busqueda exitosa.'}
-            print(request.session['data'])
-            return redirect(self.success_url)
-        else:
-            request.session['data'] = {
-                'error_message': data['error']}
-            return redirect(self.success_url)
+        return JsonResponse(data, safe=False)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

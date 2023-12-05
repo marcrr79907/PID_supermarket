@@ -1,0 +1,57 @@
+{% extends 'base/body.html' %}
+
+{% block content %}
+    <div id="main" class="row justify-content-center" style="padding-top: 100px;padding-right: 20px;padding-bottom: 20px;">
+        <div class="text-center" style="border-radius: 15px;height: 500px;">
+            
+            <p class="text-center text-light" style="font-size: 20px;">{{title}}</p>
+            <form method="POST" action=".">
+                <input type="hidden" name="action" value="{{action}}">
+
+                <label class="form-label text-light" for="categories" >Categorías</label>
+                {{ form.categories }}
+                
+                <label class="form-label text-light" for="products" >Productos</label>
+                {{ form.products }}
+
+            </form>
+            <script>
+                $(function () {
+                    $('select[name="categories"]').on('change', function () {
+                        var id = $(this).val();
+                        var select_product = $('select[name="products"]');
+                        var options = '<option value="">-----</option>';
+                        if(id === ''){
+                            select_product.html(options);
+                            return false;
+                        }
+                        $.ajax({
+                            url: window.location.pathname,
+                            type: 'POST',
+                            data: {
+                                'action': 'search_product',
+                                'id': id
+                            },
+                            dataType: 'json',
+                        }).done(function (data) {
+                            console.log(data);
+                            if (!data.hasOwnProperty('error')) {
+                                $.each(data, function (key, value) {
+                                    options += '<option value="'+value.id+'">'+value.name+'</option>';
+                                });
+                                return false;
+                            }
+                            message_error(data.error);
+                        }).fail(function (jqXHR, textStatus, errorThown) {
+                            alert(textStatus + ': ' + errorThown);
+                        }).always(function (data) {
+                            select_product.html(options);
+                        });
+                    });
+                });
+            </script>
+            
+        </div>
+    </div>
+
+{% endblock content%}
