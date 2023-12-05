@@ -16,7 +16,7 @@ class Category(models.Model):
         ordering = ['id']
    
 class Product(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, unique=True, verbose_name='nombre')
     precio = models.IntegerField()
     
     category = models.ForeignKey(Category, on_delete=models.CASCADE)

@@ -37,11 +37,11 @@ class RegisterView(CreateView):
             action = request.POST['action']
             if action == 'add':
                 form = self.get_form()
-                print(form)
+                
                 if form.is_valid():
 
                     if request.POST['password1'] == request.POST['password2']:
-                        print(request.POST)
+                        
                         form.save()
                         data['form_is_valid'] = True
 

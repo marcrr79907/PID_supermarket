@@ -1,7 +1,7 @@
 {% extends 'base/body.html' %}
 {% load static %}
 {% block content %}
-<section class="register-photo" style="background: rgba(251,251,251,0);">
+<div class="row justify-content-center" style="padding-top: 200px; padding-left: 200px; padding-right: 200px;">
     <div class="form-container">
         
         <form method="POST" action="." style="height: 525px;">
@@ -9,17 +9,17 @@
             <input type="hidden" name="action" value="{{action}}">
             <input type="hidden" name="next" value="{{next}}">
             <h2 class="text-center"><strong>{{title}}</strong>.</h2>
-            <div>
+            <div class="py-2">
                 <input class="form-control" type="text" name="username" id="register_name" placeholder="Usuario" style="margin-bottom: 10px;">
             </div>
-            <div>
+            <div class="py-2">
                 <input class="form-control" type="password" id="password_register" name="password1" placeholder="Contraseña" style="margin-top: 10px;">
             </div>
-            <div>
+            <div class="py-2">
                 <input class="form-control" type="password" id="confirmPassword_register" name="password2" placeholder="Repetir contraseña" style="margin-top: 10px;">
             </div>
             
-            <div class="form-group mb-3">
+            <div class="form-group mb-3 py-2">
                 <button class="btn btn-primary d-block w-100" data-bss-hover-animate="pulse" id="submitButton" type="submit" style="color: rgb(255,255,255);background-color: #00b5a8;box-shadow: 1px 1px 6px 0px rgba(0,0,0,0.81);">Crear cuenta</button>
             </div>
             <a class="already" href="{% url 'users:login' %}">¿Ya tienes una cuenta? Inicia sesión aquí</a>
@@ -42,5 +42,5 @@
         </script>
         
     </div>
-</section>
+</div>
 {% endblock  %}

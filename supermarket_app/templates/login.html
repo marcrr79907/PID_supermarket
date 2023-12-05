@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <div id="main" style="border-radius: 0px;">
-    <div class="text-center" data-aos="fade-down" id="info" style="border-radius: 15px;height: 500px;"><img id="ventaspro-logo" src="{% static 'img/enzona%20-%20copia.jpg' %}" width="64" height="63" style="border-radius: 90px;">
+    <div class="text-center" data-aos="fade-down" id="info" style="border-radius: 15px;height: 500px;">
         <p class="text-center" style="font-size: 20px;">{{title}}</p>
         <form class="text-center"  method="POST" action=".">
             {% csrf_token %}

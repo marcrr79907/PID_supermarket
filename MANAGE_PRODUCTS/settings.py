@@ -101,7 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-ec'
 
 TIME_ZONE = 'UTC'
 
@@ -116,7 +116,7 @@ STATICFILES_DIRS = [
 ]
 
 # Redireccion al hacer login
-LOGIN_REDIRECT_URL = '/main/'
+LOGIN_REDIRECT_URL = '/product_list/'
 
 # Redireccion al cerrar sesion
 LOGOUT_REDIRECT_URL = '/login/'
