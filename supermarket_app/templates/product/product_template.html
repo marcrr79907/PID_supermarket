@@ -6,8 +6,14 @@
         <div class="col-xl-10 col-xxl-9">
             <div class="card shadow" style="background: rgb(255, 255, 255);border-radius: 10px;">
                 <div class="card-header d-flex justify-content-center align-items-center flex-wrap justify-content-sm-between gap-3">
-                    <h5 class="display-6 text-nowrap text-capitalize mb-0">Mis Productos</h5>
+                    <div class="row"  style="padding: 10px;">
+                        <h5 class="display-6 text-nowrap text-capitalize mb-0">Mis Productos</h5>
+                        <a href="{% url 'supermarket:search_product' %}"  type="button" >
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </a>
+                    </div>
                     <div>
+                        
                         <div><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"> Añadir&nbsp;</button></div>
                         <div class="modal fade" role="dialog" tabindex="-1" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background: rgba(255,255,255,0);">
                             <div class="modal-dialog" role="document">

@@ -25,9 +25,9 @@ class Product_Form(ModelForm):
     
 class SearchProductForm(Form):
     categories = ModelChoiceField(queryset=Category.objects.all(), widget=Select(attrs={
-        'class': 'form-control select2',
+        'class': 'form-control',
     }))
     products = ModelChoiceField(queryset=Product.objects.none(), widget=Select(attrs={
-        'class': 'form-control select2',
+        'class': 'form-control',
     }))
     
